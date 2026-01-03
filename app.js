@@ -1,5 +1,9 @@
-// Import Express.js
-const express = require('express');
+// Import Express.js new
+import express from "express";
+import bodyParser from "body-parser";
+import webhookRoutes from "./webhook.js";
+// Import Express.js old
+//const express = require('express');
 
 // Create an Express app
 const app = express();
