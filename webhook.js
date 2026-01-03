@@ -1,3 +1,6 @@
+
+import { logToAirtable } from "./airtable.js";
+import { sendTextMessage } from "./whatsapp.js";
 import express from "express";
 
 const router = express.Router();
@@ -51,8 +54,6 @@ router.post("/", (req, res) => {
 
 export default router;
 
-import { logToAirtable } from "./airtable.js";
-import { sendTextMessage } from "./whatsapp.js";
 
 router.post("/", async (req, res) => {
   const entry = req.body.entry?.[0];
