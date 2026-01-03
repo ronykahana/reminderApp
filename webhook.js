@@ -50,3 +50,52 @@ router.post("/", (req, res) => {
 });
 
 export default router;
+
+import { logToAirtable } from "./airtable.js";
+import { sendTextMessage } from "./whatsapp.js";
+
+router.post("/", async (req, res) => {
+  const entry = req.body.entry?.[0];
+  const change = entry?.changes?.[0];
+  const value = change?.value;
+
+  // 📩 Incoming message
+  const message = value?.messages?.[0];
+  if (message) {
+    const from = message.from;
+    const body = message.text?.body || "";
+    const messageId = message.id;
+
+    console.log("Incoming:", from, body);
+
+    // ✅ LOG RECEIVED MESSAGE
+    await logToAirtable({
+      direction: "received",
+      phone: from,
+      messageId,
+      type: message.type,
+      body,
+      status: "",
+      raw: message
+    });
+
+    // Optional auto-reply
+    await sendTextMessage(from, `You said: ${body}`);
+  }
+
+  // 📦 Delivery status updates
+  const status = value?.statuses?.[0];
+  if (status) {
+    await logToAirtable({
+      direction: "status",
+      phone: status.recipient_id,
+      messageId: status.id,
+      type: "",
+      body: "",
+      status: status.status,
+      raw: status
+    });
+  }
+
+  res.sendStatus(200);
+});
