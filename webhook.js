@@ -33,5 +33,16 @@ router.post("/", (req, res) => {
   res.sendStatus(200);
 });
 
+//Webhook Verification (Required Once)
+router.get("/", (req, res) => {
+  if (
+    req.query["hub.mode"] === "subscribe" &&
+    req.query["hub.verify_token"] === process.env.VERIFY_TOKEN
+  ) {
+    return res.send(req.query["hub.challenge"]);
+  }
+  res.sendStatus(403);
+});
+
 export default router;
 
