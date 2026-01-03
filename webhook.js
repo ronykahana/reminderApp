@@ -40,7 +40,7 @@ router.post("/", (req, res) => {
     console.log("Incoming message:", from, text);
 
     // 👉 reply automatically
-    sendTextMessage(from, `You said: ${text}`);
+    await sendTextMessage(from, `You said: ${text}`);
   }
 
   // Delivery status updates
