@@ -2,13 +2,13 @@ import express from "express";
 import { sendTextMessage } from "./whatsapp.js";
 import { logToAirtable } from "./airtable.js";
 
-const router = express.Router();
+const webhookRouter = express.Router();
 
-router.get("/", (req, res) => {
+webhookRouter.get("/", (req, res) => {
   res.send("Webhook alive");
 });
 
-router.post("/", async (req, res) => {
+webhookRouter.post("/", async (req, res) => {
   try {
     const entry = req.body.entry?.[0];
     const change = entry?.changes?.[0];
@@ -47,7 +47,7 @@ router.post("/", async (req, res) => {
 
 // const router = express.Router();
 
-router.post("/", async (req, res) => {
+webhookRouter.post("/", async (req, res) => {
   const entry = req.body.entry?.[0];
   const change = entry?.changes?.[0];
   const value = change?.value;
@@ -79,4 +79,4 @@ router.post("/", async (req, res) => {
   res.sendStatus(200);
 });
 
-export default router;
+export default webhookRouter;
