@@ -4,8 +4,6 @@ import bodyParser from "body-parser";
 import webhookRouter from "./webhook.js";
 import sendRouter from "./send.js";
 import { sendTextMessage } from "./whatsapp.js";
-import { logToAirtable } from "./airtable.js";
-
 
 // Import Express.js old
 //const express = require('express');
