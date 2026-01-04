@@ -30,6 +30,7 @@ const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
 const AIRTABLE_BASE = process.env.AIRTABLE_BASE;
 const AIRTABLE_TABLE = "WhatsApp Logs";
 
+console.log("🫳 Route for GET requests");
 // Route for GET requests
 app.get('/', (req, res) => {
   const { 'hub.mode': mode, 'hub.challenge': challenge, 'hub.verify_token': token } = req.query;
@@ -42,6 +43,7 @@ app.get('/', (req, res) => {
   }
 });
 
+console.log("📫 Route for POST requests");
 // Route for POST requests
 app.post('/', (req, res) => {
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
@@ -51,6 +53,7 @@ app.post('/', (req, res) => {
 });
 
 
+console.log("🪝 Webhook Verification (Meta requirement)");
 //Webhook Verification (Meta requirement)
 app.get("/webhook", (req, res) => {
   const mode = req.query["hub.mode"];
@@ -65,6 +68,7 @@ app.get("/webhook", (req, res) => {
   return res.sendStatus(403);
 });
 
+console.log("🎁 Webhook Receiver → Airtable");
 //Webhook Receiver → Airtable
 app.post("/webhook", async (req, res) => {
   try {
@@ -92,11 +96,13 @@ app.post("/webhook", async (req, res) => {
   }
 });
 
+console.log("👂 Start the server app.listen")
 // Start the server
 app.listen(port, () => {
   console.log(`\nListening on port ${port}\n`);
 });
 
+console.log("🧪 test-123 from 15555555555");
 //test
 import { logToAirtable } from "./airtable.js";
 
