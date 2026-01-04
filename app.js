@@ -1,8 +1,7 @@
 // Import Express.js new
 import express from "express";
 import bodyParser from "body-parser";
-//import webhookRoutes from "./webhook.js";
-import router from "./webhook.js";
+import webhookRoutes from "./webhook.js";
 import { sendTextMessage } from "./whatsapp.js";
 
 
