@@ -2,6 +2,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import webhookRouter from "./webhook.js";
+import sendRouter from "./send.js";
 import { sendTextMessage } from "./whatsapp.js";
 
 
