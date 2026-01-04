@@ -90,34 +90,6 @@ app.post("/webhook", async (req, res) => {
   }
 });
 
-//Airtable Logger
-async function logToAirtable(record) {
-  const url = `https://api.airtable.com/v0/${AIRTABLE_BASE}/${encodeURIComponent(AIRTABLE_TABLE)}`;
-
-  const payload = {
-    records: [
-      {
-        fields: {
-          "Message ID": record.messageId,
-          "Status": record.status,
-          "Recipient": record.recipient,
-          "Timestamp": new Date(record.timestamp * 1000).toISOString(),
-          "Errors": record.errors
-        }
-      }
-    ]
-  };
-
-  await fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${AIRTABLE_TOKEN}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(payload)
-  });
-}
-
 // Start the server
 app.listen(port, () => {
   console.log(`\nListening on port ${port}\n`);
