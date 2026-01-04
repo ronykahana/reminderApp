@@ -1,6 +1,7 @@
 import express from "express";
 import { sendTextMessage } from "./whatsapp.js";
 import { logToAirtable } from "./airtable.js";
+import { logToAirtableSimple } from "./airtable.js";
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ router.post("/", async (req, res) => {
     await logToAirtable({
       direction: "received",
       phone: from,
-      messageId,
+      messageId: messageId,
       type: message.type,
       body: text,
       status: "",
