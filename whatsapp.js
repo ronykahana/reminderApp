@@ -1,7 +1,7 @@
 import { logToAirtable } from "./airtable.js";
 
 export async function sendTextMessage(to, text) {
-  const url = `https://graph.facebook.com/v23.0/${process.env.PHONE_ID}/messages`;
+  const url = `https://graph.facebook.com/v24.0/${process.env.PHONE_ID}/messages`;
 
   const body = {
     messaging_product: "whatsapp",
