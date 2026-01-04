@@ -17,8 +17,8 @@ router.post("/", async (req, res) => {
     const text = message.text?.body || "";
     const messageId = message.id;
 
-    console.log("Incoming message:", from, text);
-
+    console.log("🚁 Incoming message:", from, text);
+    
     await logToAirtable({
       direction: "received",
       phone: from,
@@ -29,6 +29,7 @@ router.post("/", async (req, res) => {
       raw: message
     });
 
+    console.log("🚀 Sending reply to", from);
     // ✅ await is legal because we're inside async ()
     await sendTextMessage(from, `You said: ${text}`);
   }
