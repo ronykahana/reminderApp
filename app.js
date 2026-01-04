@@ -123,3 +123,16 @@ app.listen(port, () => {
   console.log(`\nListening on port ${port}\n`);
 });
 
+//test
+import { logToAirtable } from "./airtable.js";
+
+logToAirtable({
+  direction: "test",
+  phone: "+15555555555",
+  messageId: "test-123",
+  type: "text",
+  body: "Hello test",
+  status: "ok",
+  raw: { hello: "world" }
+});
+
