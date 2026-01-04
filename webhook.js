@@ -1,7 +1,6 @@
 import express from "express";
 import { sendTextMessage } from "./whatsapp.js";
 import { logToAirtable } from "./airtable.js";
-import { logToAirtableSimple } from "./airtable.js";
 
 const router = express.Router();
 
