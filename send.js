@@ -3,9 +3,9 @@ import { sendTextMessage } from "./whatsapp.js";
 import { logToAirtable } from "./airtable.js";
 import {sendTemplateMessage} from "./whatsapp.js";
 
-const router = express.Router();
+const sendRouter = express.Router();
 
-router.post("/", async (req, res) => {
+sendRouter.post("/", async (req, res) => {
   const { to, text, source = "Airtable" } = req.body;
 
   try {
@@ -29,4 +29,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-export default router;
+export default sendRouter;
