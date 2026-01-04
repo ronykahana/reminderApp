@@ -1,3 +1,16 @@
+export async function logToAirtableSimple(record) {
+  await fetch(`https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/WhatsApp Logs`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.AIRTABLE_TOKEN}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      records: [{ fields: record }]
+    })
+  });
+}
+
 export async function logToAirtable({
   direction,
   phone,
