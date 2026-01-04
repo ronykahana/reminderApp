@@ -12,10 +12,15 @@ const app = express();
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use("/webhook", webhookRouter);
+app.use("/send", sendRouter);
+app.get("/", (_, res) => res.send("WhatsApp bot running"));
 
 // Set port and verify_token
-const port = process.env.PORT || 3000 || 1000;
+const port = process.env.PORT || 3000;
 const verifyToken = process.env.VERIFY_TOKEN;
+
+app.listen(port, () => console.log(`Server running on ${port}`));
 
 //linking to airtable
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
