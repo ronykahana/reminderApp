@@ -21,7 +21,7 @@ app.get("/", (_, res) => res.send("WhatsApp bot running"));
 const port = process.env.PORT || 3000;
 const verifyToken = process.env.VERIFY_TOKEN;
 
-app.listen(port, () => console.log(`Server running on ${port}`));
+app.listen(port, () => console.log(`🚀 Server running on ${port}`));
 
 //linking to airtable
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
