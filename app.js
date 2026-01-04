@@ -95,11 +95,11 @@ app.post("/webhook", async (req, res) => {
   }
 });
 
-console.log("👂 Start the server app.listen")
-// Start the server
-app.listen(port, () => {
-  console.log(`\nListening on port ${port}\n`);
-});
+// console.log("👂 Start the server app.listen")
+// // Start the server
+// app.listen(port, () => {
+//   console.log(`\nListening on port ${port}\n`);
+// });
 
 console.log("🧪 test-123 from 15555555555");
 //test
