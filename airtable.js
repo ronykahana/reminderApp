@@ -13,10 +13,10 @@ export async function logToAirtableSimple(record) {
 
 export async function logToAirtable({
   direction,
-  phone,
   messageId,
-  type,
+  phone,
   body,
+  type,
   status,
   raw
 }) {
