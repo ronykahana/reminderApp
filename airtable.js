@@ -1,4 +1,4 @@
-export async function logToAirtableSimple(record) {
+export async function logToAirtable(record) {
   await fetch(`https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/WhatsApp Logs`, {
     method: "POST",
     headers: {
