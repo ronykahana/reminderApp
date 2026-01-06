@@ -29,9 +29,10 @@ const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
 const AIRTABLE_BASE = process.env.AIRTABLE_BASE;
 const AIRTABLE_TABLE = "WhatsApp Logs";
 
-console.log("🫳 Route for GET requests");
+
 // Route for GET requests
 app.get('/', (req, res) => {
+console.log("🫳 Route for GET requests");
   const { 'hub.mode': mode, 'hub.challenge': challenge, 'hub.verify_token': token } = req.query;
 
   if (mode === 'subscribe' && token === verifyToken) {
@@ -42,19 +43,49 @@ app.get('/', (req, res) => {
   }
 });
 
-console.log("📫 Route for POST requests");
-// Route for POST requests
-app.post('/', (req, res) => {
-  const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
-  console.log(`\n\nWebhook received ${timestamp}\n`);
-  console.log(JSON.stringify(req.body, null, 2));
-  res.status(200).end();
+
+app.post("/webhook", async (req, res) => {
+  try {
+    const timestamp = new Date().toISOString();
+    console.log(`📫 Webhook received ${timestamp}`);
+    console.log(JSON.stringify(req.body, null, 2));
+
+    const entry = req.body.entry?.[0];
+    const change = entry?.changes?.[0];
+    const value = change?.value;
+    const message = value?.messages?.[0];
+
+    // Ignore non-message events (statuses, etc.)
+    if (!message) {
+      return res.sendStatus(200);
+    }
+
+    const logPayload = {
+      direction: "inbound",
+      phone: message.from,
+      messageId: message.id,
+      type: message.type,
+      body: message.text?.body || "",
+      status: "received",
+      raw: req.body
+    };
+
+    await logToAirtable(logPayload);
+
+    console.log("✅ Inbound WhatsApp message logged");
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("❌ Failed to log inbound message", err);
+    res.sendStatus(200); // ALWAYS ACK WhatsApp
+  }
 });
 
 
-console.log("🪝 Webhook Verification (Meta requirement)");
+
+
 //Webhook Verification (Meta requirement)
 app.get("/webhook", (req, res) => {
+console.log("🪝 Webhook Verification (Meta requirement)");
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
   const challenge = req.query["hub.challenge"];
@@ -67,9 +98,10 @@ app.get("/webhook", (req, res) => {
   return res.sendStatus(403);
 });
 
-console.log("🎁 Webhook Receiver → Airtable");
+
 //Webhook Receiver → Airtable
 app.post("/webhook", async (req, res) => {
+console.log("🎁 Webhook Receiver → Airtable");
   try {
     const statuses =
       req.body?.entry?.[0]?.changes?.[0]?.value?.statuses;
@@ -77,8 +109,9 @@ app.post("/webhook", async (req, res) => {
     if (!statuses) {
       return res.sendStatus(200);
     }
-
+  console.log("For status of stauses loop");
     for (const status of statuses) {
+  console.log(status);
       await logToAirtable({
         messageId: status.id,
         status: status.status,
@@ -94,12 +127,6 @@ app.post("/webhook", async (req, res) => {
     res.sendStatus(500);
   }
 });
-
-// console.log("👂 Start the server app.listen")
-// // Start the server
-// app.listen(port, () => {
-//   console.log(`\nListening on port ${port}\n`);
-// });
 
 console.log("🧪 test-123 from 15555555555");
 //test
