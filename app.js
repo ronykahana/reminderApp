@@ -51,7 +51,7 @@ console.log("🫳 Route for GET requests");
 });
 
 
-app.post("/webhook", async (req, res) => {
+app.post("/", async (req, res) => {
   try {
     const timestamp = new Date().toISOString();
     console.log(`📫 Webhook received ${timestamp}`);
@@ -66,6 +66,12 @@ app.post("/webhook", async (req, res) => {
     if (!message) {
       return res.sendStatus(200);
     }
+    let msg_body;
+    if(message.type === "button"){
+      msg_body = message.button.text;
+    }else{
+      msg_body = message.text?.body;
+    };
 
     const logPayload = {
       direction: "inbound",
@@ -73,8 +79,10 @@ app.post("/webhook", async (req, res) => {
       messageId: message.id,
       type: message.type,
       body: message.text?.body || "",
-      status: "received",
-      raw: req.body
+      status: message.statuses[0]?.status || "received",
+      raw: req.body,
+      recipient: message.statuses[0]?.recipient_id || "",
+      context: JSON.stringify(message?.context) || ""
     };
 
     await logToAirtable(logPayload);
