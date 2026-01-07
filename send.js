@@ -11,17 +11,22 @@ sendRouter.post("/", async (req, res) => {
   try {
     const result = await sendTextMessage(to, text);
     const messageId = result.messages?.[0]?.id;
+    const context = result.messages?.[0]?.context;
+    const messageType = result.messages?.[0]?.type;
 
     await logToAirtable({
-      Direction: "sent",
-      "Message ID": messageId,
-      "Phone Number": to,
-      "Message Body": text,
-      "Message Type": "text",
-      Source: source,
-      Timestamp: new Date().toISOString()
+      direction: "outbound",
+      phone: "App",
+      messageId: messageId,
+      type: messageType || "text",
+      body: text,
+      status: message.statuses[0]?.status || "sent",
+      raw: source,
+      recipient: to,
+      context:  JSON.stringify(context) || ""
+      //Timestamp: new Date().toISOString()
     });
-
+    
     res.json({ success: true, messageId });
   } catch (err) {
     console.error(err);
