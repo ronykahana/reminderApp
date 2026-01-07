@@ -13,9 +13,16 @@ const app = express();
 
 // Middleware to parse JSON bodies
 app.use(express.json());
-app.use("/webhook", webhookRouter);
+//app.use("/webhook", webhookRouter);
+app.use("/", webhookRouter);
 app.use("/send", sendRouter);
 app.get("/", (_, res) => res.send("WhatsApp bot running"));
+
+app.post("/", async (req, res) => {
+  console.log("📫 Root webhook hit");
+  console.log(JSON.stringify(req.body, null, 2));
+  res.sendStatus(200);
+});
 
 // Set port and verify_token
 const port = process.env.PORT || 3000 ;
