@@ -68,14 +68,14 @@ webhookRouter.post("/", async (req, res) => {
       phone: from,
       messageId: messageId,
       type: message.type,
-      body: text,
+      body: JSON.stringify(text),
       status: "",
       raw: message
     });
 
-    console.log("🚀 Sending reply to", from);
+    //console.log("🚀 Sending reply to", from);
     // ✅ await is legal because we're inside async ()
-    await sendTextMessage(from, `You said: ${text}`);
+    //await sendTextMessage(from, `You said: ${text}`);
   }
 
   res.sendStatus(200);
