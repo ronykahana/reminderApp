@@ -27,7 +27,7 @@ webhookRouter.post("/", async (req, res) => {
         type: message.type,
         body: message.text?.body || "",
         status: "received",
-        recipient: message.metadata?.phone_number_id || "";
+        recipient: message.metadata?.phone_number_id || "",
         raw: req.body
       });
 
