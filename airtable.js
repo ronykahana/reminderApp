@@ -5,7 +5,9 @@ export async function logToAirtable({
   body,
   type,
   status,
-  raw
+  raw,
+  recipient,
+  context
 }) {
   const url = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/${encodeURIComponent(
     process.env.AIRTABLE_TABLE_NAME
@@ -22,7 +24,9 @@ export async function logToAirtable({
           "Message Type": type,
           "Message Body": body,
           Status: status,
-          "Raw Payload": JSON.stringify(raw)
+          "Raw Payload": JSON.stringify(raw),
+          Recipient: recipient || "",
+          Context: context || ""
         }
       }
     ]
