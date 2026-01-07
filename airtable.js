@@ -7,7 +7,8 @@ export async function logToAirtable({
   status,
   raw,
   recipient,
-  context
+  context,
+  error
 }) {
   const url = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/${encodeURIComponent(
     process.env.AIRTABLE_TABLE_NAME
@@ -26,7 +27,8 @@ export async function logToAirtable({
           Status: status,
           "Raw Payload": JSON.stringify(raw),
           Recipient: recipient || "",
-          Context: context || ""
+          Context: context || "",
+          Errors: error || ""
         }
       }
     ]
