@@ -23,7 +23,7 @@ export async function sendTextMessage(to, text) {
 
   await logToAirtable({
     direction: "outbound",
-    phone: data.messages?,
+    phone: data.messages?.[0]?.wa_id,
     messageId: data.messages?.[0]?.id,
     type: data.messages?.[0]? || "text",
     body: text,
