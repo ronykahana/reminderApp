@@ -60,19 +60,21 @@ webhookRouter.post("/", async (req, res) => {
     const from = message.from;
     const text = message.text?.body || "";
     const messageId = message.id;
+    const phoneId = message.metadata?.phone_number_id || "";
 
     console.log("🚁 Incoming message:", from, text);
     
     await logToAirtable({
-      direction: "received",
-      phone: from,
+      direction: "inbound",
       messageId: messageId,
-      type: message.type,
+      phone: from,
       body: JSON.stringify(text),
-      status: "",
+      type: message.type,
+      recipient: phoneId,
+      status: "received",
       raw: message
     });
-
+  
     //console.log("🚀 Sending reply to", from);
     // ✅ await is legal because we're inside async ()
     //await sendTextMessage(from, `You said: ${text}`);
