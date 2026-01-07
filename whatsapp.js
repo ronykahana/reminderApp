@@ -22,15 +22,18 @@ export async function sendTextMessage(to, text) {
   const data = await response.json();
 
   await logToAirtable({
-    direction: "sent",
-    phone: to,
+    direction: "outbound",
+    phone: data.messages?,
     messageId: data.messages?.[0]?.id,
-    type: "text",
+    type: data.messages?.[0]? || "text",
     body: text,
-    status: "sent",
-    raw: data
+    status: data.entry?.[0]?.statuses?.[0]?.status || "sent",
+    raw: JSON.stringify(data),
+    recipient: to,
+    context: ""
   });
 
+  
   return data; // ✅ now INSIDE function
 }
 
