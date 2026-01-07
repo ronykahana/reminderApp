@@ -128,17 +128,17 @@ console.log("🎁 Webhook Receiver → Airtable");
   }
 });
 
-console.log("🧪 test-123 from 15555555555");
-//test
-import { logToAirtable } from "./airtable.js";
+// console.log("🧪 test-123 from 15555555555");
+// //test
+// import { logToAirtable } from "./airtable.js";
 
-logToAirtable({
-  direction: "test",
-  phone: "+15555555555",
-  messageId: "test-123",
-  type: "text",
-  body: "Hello test",
-  status: "ok",
-  raw: { hello: "world" }
-});
+// logToAirtable({
+//   direction: "test",
+//   phone: "+15555555555",
+//   messageId: "test-123",
+//   type: "text",
+//   body: "Hello test",
+//   status: "ok",
+//   raw: { hello: "world" }
+// });
 
