@@ -131,7 +131,6 @@ console.log("🎁 Webhook Receiver → Airtable");
         messageId: status.id,
         status: status.status,
         recipient: status.recipient_id,
-        timestamp: status.timestamp,
         errors: status.errors ? JSON.stringify(status.errors) : ""
       });
     }
