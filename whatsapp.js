@@ -25,7 +25,7 @@ export async function sendTextMessage(to, text) {
     direction: "outbound",
     phone: data.messages?.[0]?.wa_id,
     messageId: data.messages?.[0]?.id,
-    type: data.messages?.[0]? || "text",
+    type: data.messages?.[0]?.type || "text",
     body: text,
     status: data.entry?.[0]?.statuses?.[0]?.status || "sent",
     raw: JSON.stringify(data),
