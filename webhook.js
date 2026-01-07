@@ -51,8 +51,7 @@ webhookRouter.post("/", async (req, res) => {
 
       console.log(`📦 Outbound status logged: ${status.status}`);
     }
-    }
-  }
+    
 
   res.sendStatus(200);
   } catch (err) {
